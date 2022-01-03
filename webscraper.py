@@ -12,11 +12,9 @@ import sys
 import csv
 
 url = 'https://www.yellowpages.com/san-dimas-ca/oral-surgeon?page='
-# url = 'https://www.yellowpages.com/search?search_terms=Cheerleading+&geo_location_terms=Covina%2C+CA'
 business_names = []
 business_websites = []
 
-# Scrapes the first 50 pages for cosmetic dentists in san dimas, ca
 for page in range(1,50):
     print("page is: ", page)
     response = requests.get(url + str(page))
@@ -36,26 +34,21 @@ for page in range(1,50):
         except:
             business_websites.append('N/A')
 
-  
-# Create csv file after the for loop is finished is finished iterating 
+
 df = pd.DataFrame({"Business Name": business_names,
                    "Website": business_websites
                    })
 
 # Clean dataset and filter out leads with no website
 newdf = df[df["Website"]!="N/A"]
-# newdf.to_csv('dentist_list_cleaned.csv', index=False)
-# newdf.to_csv('cheerleads.csv', index=False)
+
 newdf.to_csv('oral-surgeon-leads.csv', index=False)
-no_website = df[df["Website"]=="N/A"]
-no_website.to_csv('no_website.csv', index=False)
 
+# df = pd.read_csv (r'dentist_list_cleaned.csv')
+# df["Email"] = "N/A"
+# df = df.iloc[0:50]
 
-df = pd.read_csv (r'dentist_list_cleaned.csv')
-df["Email"] = "N/A"
-df = df.iloc[0:50]
-
-df["Email"] = df.apply(lambda x: webcrawler.EmailCrawler(x["Website"], axis=1))
+# df["Email"] = df.apply(lambda x: webcrawler.EmailCrawler(x["Website"], axis=1))
 
 
 
