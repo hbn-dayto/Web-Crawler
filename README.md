@@ -1,4 +1,4 @@
-Goal: Create a lead generation scraping tool that extracts the following information:
+Goal: Create a web scraping program that goes to YellowPages and extracts the following information:
 - Business Name
 - Website URL
 - Full Name (Business Owner)
@@ -9,7 +9,10 @@ webscraper.py
 - Business Name, Website URL
 
 webcrawler.py
-- Accepts a single website URL, crawls every web page, then extracts emails that meet criteria
+- Input: a single website URL
+- Output: a csv file containing emails extracted from the website
 
+Next Steps: 
+- Feed the webcrawler.py program a list of website URLs, then return a list of emails, for each unique website
 
 
