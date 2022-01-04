@@ -7,18 +7,6 @@ import sys
 import csv
 import pandas as pd
 
-# Import .csv file of dental leads into Python
-# df = pd.read_csv(r'oral-surgeon-leads.csv')
-# df["Email"] = "N/A"
-# leads = df.iloc[20:]
-# website_list = df["Website"].iloc[0:50].tolist()
-
-# Create a list of Website URLs to feed the crawler
-# website_list = df["Website"].iloc[0:100].tolist()
-# df["Website"].iloc[0:100]
-
-# Run a for loop for URL in list of website URLs: 
-
 class EmailCrawler:
 
     processed_urls = set()
@@ -74,13 +62,13 @@ class EmailCrawler:
         # response = requests.get(current_url, headers=self.headers)
         response = requests.get(current_url, headers=self.headers, timeout=5)
         tree = html.fromstring(response.content)
-        print("[+] Getting all URLs in the page...")
+        # print("[+] Getting all URLs in the page...")
 
         urls = tree.xpath('//a/@href')  # getting all urls in the page
         
 
-        #Here we will make sure that we convert the sub domain to full urls
-        print("[+] Converting sub domain to full URLs")
+        # Here we will make sure that we convert the sub domain to full urls
+        # print("[+] Converting sub domain to full URLs")
         # example --> /about.html--> https://www.website.com/about.html
         urls = [urljoin(self.website,url) for url in urls]
         # now lets make sure that we only include the urls that fall under our domain i.e filtering urls that point outside our main website.
@@ -127,7 +115,7 @@ class EmailCrawler:
             bool: True or false (True if email was found on page)
         """
         # parsing emails and then saving to csv
-        print("[+] Parsing emails and saving to .csv file")
+        # print("[+] Parsing emails and saving to .csv file")
         emails = set(re.findall(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', text, re.I))
         #TODO: sometime "gFJS3amhZEg_z39D5EErVg@2x.png" gets accepted as email with the above regex. so for now i will check if email ends with jpeg,png and jpg
 
@@ -164,12 +152,13 @@ except:
     website = input("Please enter a website to crawl for emails: ")
 
 
-# for website in website_list:
-#     crawl = EmailCrawler(website)
-#     crawl.crawl()
+# Basically, after running this file (python webcrawler.py), it will ask you to input a website to crawl,
+# then it will extract a list emails, if they meet a specified criteria 
 crawl = EmailCrawler(website)
 crawl.crawl()
 
+# The objective is to feed this EmailCrawler program a list of URLs, using
+# the csv
 
 # def crawl_website(website):
 #     try:
