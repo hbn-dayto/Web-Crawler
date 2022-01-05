@@ -154,8 +154,18 @@ except:
 
 # Basically, after running this file (python webcrawler.py), it will ask you to input a website to crawl,
 # then it will extract a list emails, if they meet a specified criteria 
-crawl = EmailCrawler(website)
-crawl.crawl()
+
+df = pd.read_csv (r'cosmetic-dentist-leads.csv')
+df["Website"]
+
+cosmetic_dentist_urls = df["Website"].tolist()
+
+for website in cosmetic_dentist_urls:
+    crawl = EmailCrawler(website)
+    crawl.crawl()
+
+# emails = df.apply(lambda x: EmailCrawler(df["Website"]), axis=1)
+# emails.crawl()
 
 # The objective is to feed this EmailCrawler program a list of URLs, using
 # the csv
